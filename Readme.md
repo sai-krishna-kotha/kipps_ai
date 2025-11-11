@@ -1,7 +1,7 @@
 # KIPPS AI – Conversation Quality Analyzer
 
 A Django-based web app that analyzes AI–User conversations for clarity, relevance, empathy, accuracy, and completeness.  
-It uses rule-based or LLM (Gemini) logic to score conversations and runs daily automated analysis via a cron job.
+It uses rule-based logic to score conversations and runs daily automated analysis via a cron job.
 
 ---
 
