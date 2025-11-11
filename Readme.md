@@ -20,26 +20,29 @@ docker build -t kipps_ai_app .
 docker run -d -p 8080:8000 kipps_ai_app
 docker exec -it <container_id> bash
 ```
-then open http://localhost:8080/api/conversations in your browser or use postman for testing(I have used postman)
-
----
 
 ## Cron Job Setup
 
-In `settings.py`:
+In `settings.py`:(change your timezone in docker for IST timings else adjust the timings.. [click here](https://pypi.org/project/django-crontab/) to know more)
 ```python
 CRONJOBS = [
-    ("0 0 * * *", "conversations.cron.run_daily_analysis")  # runs daily at 12:00 AM UTC
+    ("0 0 * * *", "conversations.cron.run_daily_analysis")  # runs daily at 12:00 AM IST
 ]
 ```
 
-To register:
+To register:(run them within the docker bash that you opened earlier)
 ```bash
 python manage.py crontab remove
 python manage.py crontab add
 service cron restart
 python manage.py crontab show
 ```
+
+then open http://localhost:8080/api/conversations in your browser or use postman for testing(I have used postman)
+
+---
+
+
 
 Logs:
 ```bash
@@ -52,7 +55,7 @@ You can debug more using docker desktop i.e., by watching container files and it
 
 ### 1 Upload Conversation
 I have used postman for API testing
-`POST /api/conversations/`
+`POST http://127.0.0.1:8080/api/conversations/`
 ```json
 {
   "title": "Order chat",
@@ -67,10 +70,10 @@ I have used postman for API testing
 ```
 
 ### 2️ Analyze Conversation
-`POST /api/conversations/<id>/analyse/`(this is the api we calling in the cron job)
+`POST http://127.0.0.1:8080/api/conversations/<id>/analyse/`(this is the api we calling in the cron job)
 
 ### 3️ Get Reports
-`GET /api/reports/`
+`GET http://127.0.0.1:8080/api/reports/`
 
 ---
 
